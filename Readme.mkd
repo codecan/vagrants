@@ -1,0 +1,11 @@
+Please set the following environment variables:
+
+CHEF_ORGANIZATION = 'anorgname' # defaults to your usernam
+CHEF_USERNAME # defaults to asking
+CHEF_PASSWORD
+
+# Default to Hosted-Chef
+
+CHEF_ACCOUNT_URL = 'https://prod-chef.internal.machines'
+CHEF_API_URL = 'https://prod-chef.internal.machines'
+CHEF_MANAGE_URL = 'https://prod-chef.internal.machines'

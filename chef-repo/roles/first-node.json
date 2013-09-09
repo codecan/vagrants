@@ -1,0 +1,6 @@
+{
+  "name": "first-node",
+  "description": "The role for first node!!",
+  "run_list": [
+  ]
+}
