@@ -1,11 +1,23 @@
-Please set the following environment variables:
+Install Vagrant, Virtualbox and Chef first!
 
-CHEF_ORGANIZATION = 'anorgname' # defaults to your usernam
-CHEF_USERNAME # defaults to asking
-CHEF_PASSWORD
+```
+# Zipfile
+wget https://github.com/codecan/vagrants/archive/master.zip
+unzip master.zip
+cd vagrants-master
+
+#or Git
+git clone https://github.com/codecan/vagrants.git
+cd vagrants
+
+# Optionally set the following environment variables:
+CHEF_ORGANIZATION = 'your_orgname' # defaults to your local username
+CHEF_USERNAME = 'your_chef_username' # defaluts to your local username
+CHEF_PASSWORD # defaults to prompting
 
 # Default to Hosted-Chef
 
 CHEF_ACCOUNT_URL = 'https://prod-chef.internal.machines'
 CHEF_API_URL = 'https://prod-chef.internal.machines'
 CHEF_MANAGE_URL = 'https://prod-chef.internal.machines'
+```
