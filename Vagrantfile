@@ -32,7 +32,7 @@ if not ::File.exists? ".chef/#{ENV['CHEF_ORGANIZATION']}-validator.pem"
       f.write("\n")
   end
   # upload everything from the chef-repo
-  system('knife upload /')
+  system('/opt/chef/embedded/bin/bundle exec knife upload /')
   # restore the ENV
   ENV.update saved_env
 end
