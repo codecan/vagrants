@@ -1,32 +1,27 @@
-require 'io/console'
-
-def get_password(prompt=nil)
-  prompt ||= "Enter Chef Password for #{ENV['CHEF_USERNAME']} at #{ENV['CHEF_MANAGE_URL']}:"
-  STDOUT.write prompt
-  STDIN.noecho{|io|io.gets}.chomp
-end
-
-organization = ENV['CHEF_ORGANIZATION'] ||= ENV['USER']
-chef_username = ENV['CHEF_USERNAME'] ||= ENV['USER']
-
+ENV['CHEF_ORGANIZATION'] ||= ENV['USER']
+ENV['CHEF_USERNAME'] ||= ENV['USER']
 ENV['CHEF_ACCOUNT_URL'] ||= 'https://www.opscode.com'
 ENV['CHEF_API_URL'] ||= 'https://api.opscode.com'
 ENV['CHEF_MANAGE_URL'] ||= 'https://manage.opscode.com'
 
-require 'pp'
-
-if not ::File.exists? ".chef/#{organization}-validator.pem"
-  chef_password = ENV['CHEF_PASSWORD'] ||= get_password
+if not ::File.exists? ".chef/#{ENV['CHEF_ORGANIZATION']}-validator.pem"
   saved_env = ENV.to_hash
   ENV.reject! {|k,v| k =~ /GEM/} # we don't want vagrant GEM vars
+  # ensure we are using our Gemfile
+  if not ::File.exists? "vendor/gems"
+    system("/opt/chef/embedded/bin/bundle install --path vendor/gems")
+  end
   # knife setup our org
-  cmd = "/opt/chef/embedded/bin/bundle exec knife setup #{organization} \
-    --username #{chef_username} --password #{chef_password} \
-    --key .chef/#{chef_username}.pem \
+  cmd = "/opt/chef/embedded/bin/bundle exec knife setup #{ENV['CHEF_ORGANIZATION']} \
+    --username #{ENV['CHEF_USERNAME']} \
+    --key .chef/#{ENV['CHEF_USERNAME']}.pem \
     --account-url #{ENV['CHEF_ACCOUNT_URL']} \
     --api-server-url #{ENV['CHEF_API_URL']} \
     --manage-url #{ENV['CHEF_MANAGE_URL']} \
-    --validation_key .chef/#{organization}-validator.pem"
+    --validation_key .chef/#{ENV['CHEF_ORGANIZATION']}-validator.pem"
+  # use password variable if available
+  cmd += " --password '#{ENV['CHEF_PASSWORD']}'" if ENV['CHEF_PASSWORD']
+  puts ENV.select{|k,v| k =~ /^CHEF/}
   puts cmd
   system(cmd)
   # update the generated knife.rb to find our chef-repo
@@ -60,9 +55,9 @@ Vagrant.configure("2") do |config|
       node_config.vm.hostname = name
       node_config.vm.network :private_network, ip: "#{classc}.#{node_names.index(name)+10}"
       node_config.vm.provision :chef_client do |chef|
-        chef.chef_server_url="https://api.opscode.com/organizations/#{organization}/"
-        chef.validation_key_path=".chef/#{organization}-validator.pem"
-        chef.validation_client_name="#{organization}-validator"
+        chef.chef_server_url="https://api.opscode.com/ENV['CHEF_ORGANIZATION']s/#{ENV['CHEF_ORGANIZATION']}/"
+        chef.validation_key_path=".chef/#{ENV['CHEF_ORGANIZATION']}-validator.pem"
+        chef.validation_client_name="#{ENV['CHEF_ORGANIZATION']}-validator"
         chef.add_role "#{name}-node" # have a role per node
       end
     end
