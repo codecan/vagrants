@@ -1,5 +1,19 @@
 Install Vagrant, Virtualbox and Chef first!
 
+# Requirements
+
+Chef, Virtualbox, and Vagrant.
+
+* http://www.opscode.com/chef/install/
+* http://downloads.vagrantup.com/
+* https://www.virtualbox.org/wiki/Downloads
+
+You will also need to install a vagrant-omnibus plugin:
+
+```vagrant plugin install vagrant-omnibus```
+
+Be sure to run the above command in a directory that does not contain a Vagrant file.
+
 ```
 # Zipfile
 wget https://github.com/codecan/vagrants/archive/master.zip
