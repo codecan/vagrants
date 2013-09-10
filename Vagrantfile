@@ -1,3 +1,6 @@
+# To change these, do:
+# export CHEF_VAR1=foo
+# export CHEF_VAR2=bar
 ENV['CHEF_ORGANIZATION'] ||= ENV['USER']
 ENV['CHEF_USERNAME'] ||= ENV['USER']
 ENV['CHEF_ACCOUNT_URL'] ||= 'https://www.opscode.com'
