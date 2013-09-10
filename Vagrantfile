@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
       node_config.vm.hostname = name
       node_config.vm.network :private_network, ip: "#{classc}.#{node_names.index(name)+10}"
       node_config.vm.provision :chef_client do |chef|
-        chef.chef_server_url="https://api.opscode.com/ENV['CHEF_ORGANIZATION']s/#{ENV['CHEF_ORGANIZATION']}/"
+        chef.chef_server_url="https://api.opscode.com/organizations/#{ENV['CHEF_ORGANIZATION']}/"
         chef.validation_key_path=".chef/#{ENV['CHEF_ORGANIZATION']}-validator.pem"
         chef.validation_client_name="#{ENV['CHEF_ORGANIZATION']}-validator"
         chef.add_role "#{name}-node" # have a role per node
