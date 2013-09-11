@@ -2,6 +2,8 @@
   "name": "first-node",
   "description": "The role for first node!!",
   "run_list": [
-    "gerrit"
-  ]
+      "gerrit-vagrant"
+  ],
+  "override_attributes": {
+  }
 }

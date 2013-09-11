@@ -2,6 +2,5 @@
   "name": "second-node",
   "description": "The role for second node!!",
   "run_list": [
-    "motd-klarna"
   ]
 }
